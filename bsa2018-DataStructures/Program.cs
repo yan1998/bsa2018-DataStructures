@@ -8,12 +8,14 @@ namespace bsa2018_DataStructures
     class Program
     {
         private static List<User> users;
+
         public static void Main(string[] args)
         {
             LoadData load = new LoadData();
             users = load.LoadAsync().Result;
             FirstQuery(1);
             SecondQuery(1);
+            ThirdQuery(27);
             Console.ReadLine();
         }
 
@@ -33,6 +35,16 @@ namespace bsa2018_DataStructures
                 .SelectMany(p=>p.Comments);
             foreach (var comment in comments)
                 Console.WriteLine(comment);
+        }
+
+        public static void ThirdQuery(int idUser)
+        {
+            var toDos = users.Where(u => u.Id == idUser)
+                .SelectMany(u => u.ToDos)
+                .Where(td => td.IsComplete)
+                .Select(td=>new { Id=td.Id, Name=td.Name});
+            foreach (var toDo in toDos)
+                Console.WriteLine(toDo.Id+" - "+toDo.Name);
         }
     }
 }
