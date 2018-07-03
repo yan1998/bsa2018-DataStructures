@@ -12,5 +12,10 @@ namespace bsa2018_DataStructures.Models
         public int UserId { get; set; }
         public int PostId { get; set; }
         public int Likes { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Body} - {CreateAt.ToString("d")}\nLikes - {Likes}";
+        }
     }
 }
