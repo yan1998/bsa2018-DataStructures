@@ -12,6 +12,7 @@ namespace bsa2018_DataStructures.Models
         public string Email { get; set; }
         public List<Post> Posts { get; set; }
         public List<ToDo> ToDos { get; set; }
+        public List<Comment> Comments { get; set; }
         public Address Address { get; set; }
 
         public override string ToString()
