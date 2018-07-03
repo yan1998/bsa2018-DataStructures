@@ -13,7 +13,7 @@ namespace bsa2018_DataStructures
             LoadData load = new LoadData();
             users = load.LoadAsync().Result;
             FirstQuery(1);
-
+            SecondQuery(1);
             Console.ReadLine();
         }
 
@@ -23,6 +23,16 @@ namespace bsa2018_DataStructures
                          where user.Id == idUser
                          select user.Posts).Count();
             Console.WriteLine($"Count of posts = {count}");
+        }
+
+        public static void SecondQuery(int idUser)
+        {
+            var comments = users.Where(u => u.Id == idUser)
+                .SelectMany(u => u.Posts)
+                .Where(p => p.Body.Length < 50)
+                .SelectMany(p=>p.Comments);
+            foreach (var comment in comments)
+                Console.WriteLine(comment);
         }
     }
 }
