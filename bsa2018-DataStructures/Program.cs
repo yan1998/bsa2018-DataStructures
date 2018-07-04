@@ -17,7 +17,8 @@ namespace bsa2018_DataStructures
             //SecondQuery(1);
             //ThirdQuery(27);
             //FourthQuery();
-            FifthQuery(1);
+            //FifthQuery(1);
+            SixthQuery(91);
             Console.ReadLine();
         }
 
@@ -77,7 +78,20 @@ namespace bsa2018_DataStructures
             result.CommentsCount = result.LastPost.Comments.Count;
 
             Console.WriteLine($"{result.User} {result.LastPost} {result.CommentsCount}");
+        }
 
+        public static void SixthQuery(int idPost)
+        {
+            var result = users.SelectMany(u => u.Posts)
+                .Where(p => p.Id == idPost)
+                .Select(p=>(
+                    Post:p,
+                    LongestComment:p.Comments.OrderByDescending(c=>c.Body).FirstOrDefault(),
+                    LikestComment:p.Comments.OrderByDescending(c=>c.Likes).FirstOrDefault(),
+                    Count:p.Comments.Where(c=>c.Likes==0 || c.Body.Length<80).Count()
+                )).FirstOrDefault();
+
+            Console.WriteLine($"{result.Post}\n{result.LongestComment}\n{result.LikestComment}");
         }
     }
 }
