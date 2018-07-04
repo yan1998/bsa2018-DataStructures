@@ -16,7 +16,9 @@ namespace bsa2018_DataStructures
             //FirstQuery(1);
             //SecondQuery(1);
             //ThirdQuery(27);
-            FourthQuery();
+            //FourthQuery();
+            //FifthQuery(1);
+            SixthQuery(91);
             Console.ReadLine();
         }
 
@@ -60,6 +62,36 @@ namespace bsa2018_DataStructures
                 foreach (var toDo in user.ToDos)
                     Console.WriteLine(toDo);
             }          
+        }
+
+        public static void FifthQuery(int idUser)
+        {
+            var result = users.Where(u => u.Id == idUser)
+                .Select(u => (
+                    User:u,
+                    LastPost:u.Posts.OrderByDescending(c=>c.CreateAt).FirstOrDefault(),
+                    CommentsCount:0,
+                    CountUncompletedTodos:u.ToDos.Where(td=>!td.IsComplete).Count(),
+                    MaxCommentPost:u.Posts.Where(p=>p.Body.Length>80).OrderByDescending(p=>p.Comments).FirstOrDefault(),
+                    MaxLikesPost:u.Posts.OrderByDescending(p=>p.Likes).FirstOrDefault()
+                )).FirstOrDefault();
+            result.CommentsCount = result.LastPost.Comments.Count;
+
+            Console.WriteLine($"{result.User} {result.LastPost} {result.CommentsCount}");
+        }
+
+        public static void SixthQuery(int idPost)
+        {
+            var result = users.SelectMany(u => u.Posts)
+                .Where(p => p.Id == idPost)
+                .Select(p=>(
+                    Post:p,
+                    LongestComment:p.Comments.OrderByDescending(c=>c.Body).FirstOrDefault(),
+                    LikestComment:p.Comments.OrderByDescending(c=>c.Likes).FirstOrDefault(),
+                    Count:p.Comments.Where(c=>c.Likes==0 || c.Body.Length<80).Count()
+                )).FirstOrDefault();
+
+            Console.WriteLine($"{result.Post}\n{result.LongestComment}\n{result.LikestComment}");
         }
     }
 }
