@@ -43,7 +43,7 @@ namespace bsa2018_DataStructures
             var toDos = users.Where(u => u.Id == idUser)
                 .SelectMany(u => u.ToDos)
                 .Where(td => td.IsComplete)
-                .Select(td => new { Id = td.Id, Name = td.Name });
+                .Select(td => ( Id : td.Id, Name : td.Name ));
             foreach (var toDo in toDos)
                 Console.WriteLine(toDo.Id + " - " + toDo.Name);
         }
@@ -58,7 +58,7 @@ namespace bsa2018_DataStructures
                 Console.WriteLine("---------------------");
                 Console.WriteLine(user);
                 foreach (var toDo in user.ToDos)
-                    Console.WriteLine(toDo);
+                    Console.WriteLine('\t'+toDo.Name);
             }
         }
 

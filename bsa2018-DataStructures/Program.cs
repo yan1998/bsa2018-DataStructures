@@ -22,7 +22,7 @@ namespace bsa2018_DataStructures
             do
             {
                 Console.WriteLine("\nEnter a number(1-6)\n0-exit");
-                 x = Console.ReadKey().KeyChar;
+                x = Console.ReadKey().KeyChar;
                 Console.Clear();
                 switch (x)
                 {
