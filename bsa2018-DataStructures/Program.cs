@@ -13,9 +13,10 @@ namespace bsa2018_DataStructures
         {
             LoadData load = new LoadData();
             users = load.LoadAsync().Result;
-            FirstQuery(1);
-            SecondQuery(1);
-            ThirdQuery(27);
+            //FirstQuery(1);
+            //SecondQuery(1);
+            //ThirdQuery(27);
+            FourthQuery();
             Console.ReadLine();
         }
 
@@ -45,6 +46,20 @@ namespace bsa2018_DataStructures
                 .Select(td=>new { Id=td.Id, Name=td.Name});
             foreach (var toDo in toDos)
                 Console.WriteLine(toDo.Id+" - "+toDo.Name);
+        }
+
+        public static void FourthQuery()
+        {
+            var result = users.OrderBy(u => u.Name)
+                .Select(u => { u.ToDos = u.ToDos.OrderByDescending(td => td.Name.Length).ToList(); return u; })
+                .ToList();
+            foreach (var user in result)
+            {
+                Console.WriteLine("---------------------");
+                Console.WriteLine(user);
+                foreach (var toDo in user.ToDos)
+                    Console.WriteLine(toDo);
+            }          
         }
     }
 }
