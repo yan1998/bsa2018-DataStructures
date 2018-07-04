@@ -16,10 +16,16 @@ namespace bsa2018_DataStructures
 
         public void FirstQuery(int idUser)
         {
-            int count = (from user in users
-                         where user.Id == idUser
-                         select user.Posts).Count();
-            Console.WriteLine($"Count of posts = {count}");
+            var counts = users.Where(u => u.Id == idUser)
+                .First()
+                .Posts.Select(p => (
+                    Post: p,
+                    CountComments: p.Comments.Count
+                )).ToList();
+
+            Console.WriteLine("Result: ");
+            foreach (var count in counts)
+                Console.WriteLine($"{count.Post.Title} - {count.CountComments}");
         }
 
         public void SecondQuery(int idUser)
