@@ -16,7 +16,8 @@ namespace bsa2018_DataStructures
             //FirstQuery(1);
             //SecondQuery(1);
             //ThirdQuery(27);
-            FourthQuery();
+            //FourthQuery();
+            FifthQuery(1);
             Console.ReadLine();
         }
 
@@ -60,6 +61,23 @@ namespace bsa2018_DataStructures
                 foreach (var toDo in user.ToDos)
                     Console.WriteLine(toDo);
             }          
+        }
+
+        public static void FifthQuery(int idUser)
+        {
+            var result = users.Where(u => u.Id == idUser)
+                .Select(u => (
+                    User:u,
+                    LastPost:u.Posts.OrderByDescending(c=>c.CreateAt).FirstOrDefault(),
+                    CommentsCount:0,
+                    CountUncompletedTodos:u.ToDos.Where(td=>!td.IsComplete).Count(),
+                    MaxCommentPost:u.Posts.Where(p=>p.Body.Length>80).OrderByDescending(p=>p.Comments).FirstOrDefault(),
+                    MaxLikesPost:u.Posts.OrderByDescending(p=>p.Likes).FirstOrDefault()
+                )).FirstOrDefault();
+            result.CommentsCount = result.LastPost.Comments.Count;
+
+            Console.WriteLine($"{result.User} {result.LastPost} {result.CommentsCount}");
+
         }
     }
 }
