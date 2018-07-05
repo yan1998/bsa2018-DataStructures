@@ -32,8 +32,8 @@ namespace bsa2018_DataStructures
         {
             var comments = users.Where(u => u.Id == idUser)
                 .SelectMany(u => u.Posts)
-                .Where(p => p.Body.Length < 50)
-                .SelectMany(p => p.Comments);
+                .SelectMany(p => p.Comments)
+                .Where(c => c.Body.Length < 50);
             foreach (var comment in comments)
                 Console.WriteLine(comment);
         }
