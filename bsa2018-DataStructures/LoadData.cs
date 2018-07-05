@@ -21,11 +21,12 @@ namespace bsa2018_DataStructures
             List<ToDo> toDos;
             using (HttpClient client = new HttpClient())
             {
-                posts = await LoadAllPosts(client, page);
-                comments = await LoadAllComments(client, page);
-                address = await LoadAllAddress(client, page);
-                toDos = await LoadAllToDos(client, page);
-                users = await LoadAllUsers(client, page);
+                client.BaseAddress = new Uri(page);
+                posts = await LoadAllPosts(client);
+                comments = await LoadAllComments(client);
+                address = await LoadAllAddress(client);
+                toDos = await LoadAllToDos(client);
+                users = await LoadAllUsers(client);
             }
             posts = (from post in posts
                      join comment in comments on post.Id equals comment.PostId into commentsGroup
@@ -59,10 +60,10 @@ namespace bsa2018_DataStructures
             return users;
         }
 
-        private async Task<List<User>> LoadAllUsers(HttpClient client, string page)
+        private async Task<List<User>> LoadAllUsers(HttpClient client)
         {
             List<User> users;
-            using (HttpResponseMessage response = await client.GetAsync(page + "users"))
+            using (HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "users"))
             {
                 string result = await response.Content.ReadAsStringAsync();
                 users = JsonConvert.DeserializeObject<List<User>>(result);
@@ -70,10 +71,10 @@ namespace bsa2018_DataStructures
             return users;
         }
 
-        private async Task<List<ToDo>> LoadAllToDos(HttpClient client, string page)
+        private async Task<List<ToDo>> LoadAllToDos(HttpClient client)
         {
             List<ToDo> toDos;
-            using (HttpResponseMessage response = await client.GetAsync(page + "todos"))
+            using (HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "todos"))
             {
                 string result = await response.Content.ReadAsStringAsync();
                 toDos = JsonConvert.DeserializeObject<List<ToDo>>(result);
@@ -81,10 +82,10 @@ namespace bsa2018_DataStructures
             return toDos;
         }
 
-        private async Task<List<Address>> LoadAllAddress(HttpClient client, string page)
+        private async Task<List<Address>> LoadAllAddress(HttpClient client)
         {
             List<Address> address;
-            using (HttpResponseMessage response = await client.GetAsync(page + "address"))
+            using (HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "address"))
             {
                 string result = await response.Content.ReadAsStringAsync();
                 address = JsonConvert.DeserializeObject<List<Address>>(result);
@@ -92,10 +93,10 @@ namespace bsa2018_DataStructures
             return address;
         }
 
-        private async Task<List<Post>> LoadAllPosts(HttpClient client, string page)
+        private async Task<List<Post>> LoadAllPosts(HttpClient client)
         {
             List<Post> posts;
-            using (HttpResponseMessage response = await client.GetAsync(page + "posts"))
+            using (HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "posts"))
             {
                 string result = await response.Content.ReadAsStringAsync();
                 posts = JsonConvert.DeserializeObject<List<Post>>(result);
@@ -103,10 +104,10 @@ namespace bsa2018_DataStructures
             return posts;
         }
 
-        private async Task<List<Comment>> LoadAllComments(HttpClient client, string page)
+        private async Task<List<Comment>> LoadAllComments(HttpClient client)
         {
             List<Comment> comments;
-            using (HttpResponseMessage response = await client.GetAsync(page + "comments"))
+            using (HttpResponseMessage response = await client.GetAsync(client.BaseAddress + "comments"))
             {
                 string result = await response.Content.ReadAsStringAsync();
                 comments = JsonConvert.DeserializeObject<List<Comment>>(result);
