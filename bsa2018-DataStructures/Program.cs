@@ -24,41 +24,48 @@ namespace bsa2018_DataStructures
                 Console.WriteLine("\nEnter a number(1-6)\n0-exit");
                 x = Console.ReadKey().KeyChar;
                 Console.Clear();
-                switch (x)
+                try
                 {
-                    case '1': Console.Write("Enter a userId: ");
-                        int userId = int.Parse(Console.ReadLine());
-                        queries.FirstQuery(userId);
-                        break;
-                    case '2':
-                        Console.Write("Enter a userId: ");
-                        userId = int.Parse(Console.ReadLine());
-                        queries.SecondQuery(userId);
-                        break;
-                    case '3':
-                        Console.Write("Enter a userId: ");
-                        userId = int.Parse(Console.ReadLine());
-                        queries.ThirdQuery(userId);
-                        break;
-                    case '4':
-                        queries.FourthQuery();
-                        break;
-                    case '5':
-                        Console.Write("Enter a userId: ");
-                        userId = int.Parse(Console.ReadLine());
-                        queries.FifthQuery(userId);
-                        break;
-                    case '6':
-                        Console.Write("Enter a postId: ");
-                        int postId = int.Parse(Console.ReadLine());
-                        queries.SixthQuery(postId);
-                        break;
-                    default:
-                        Console.WriteLine("Incorrect number!");
-                        break;
+                    switch (x)
+                    {
+                        case '1':
+                            Console.Write("Enter a userId: ");
+                            int userId = int.Parse(Console.ReadLine());
+                            queries.FirstQuery(userId);
+                            break;
+                        case '2':
+                            Console.Write("Enter a userId: ");
+                            userId = int.Parse(Console.ReadLine());
+                            queries.SecondQuery(userId);
+                            break;
+                        case '3':
+                            Console.Write("Enter a userId: ");
+                            userId = int.Parse(Console.ReadLine());
+                            queries.ThirdQuery(userId);
+                            break;
+                        case '4':
+                            queries.FourthQuery();
+                            break;
+                        case '5':
+                            Console.Write("Enter a userId: ");
+                            userId = int.Parse(Console.ReadLine());
+                            queries.FifthQuery(userId);
+                            break;
+                        case '6':
+                            Console.Write("Enter a postId: ");
+                            int postId = int.Parse(Console.ReadLine());
+                            queries.SixthQuery(postId);
+                            break;
+                        default:
+                            Console.WriteLine("Incorrect number!");
+                            break;
+                    }
                 }
-            } while (x!='0');
+                catch (Exception)
+                {
+                    Console.WriteLine("Incorrect Id!");
+                }
+            } while (x != '0');
         }
-
     }
 }
